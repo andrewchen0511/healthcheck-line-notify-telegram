@@ -14,13 +14,13 @@ apilist = [
 # standard time def
 def time():
     """
-        print the current time UTC +8:00
+        print the current time UTC +0:00
     """
     try:
         # Getting the standard time upto seconds only.
         global Standard_time
         Standard_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        print(f'Standard Time:{Standard_time}(UTC +8:00)')
+        print(f'Standard Time:{Standard_time}(UTC +0:00)')
     except:
         print('Something Wrong in main function',exc_info=True)
 
