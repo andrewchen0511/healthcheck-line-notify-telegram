@@ -13,6 +13,9 @@ apilist = [
 ]
 # standard time def
 def time():
+    """
+        print the current time UTC +8:00
+    """
     try:
         # Getting the standard time upto seconds only.
         global Standard_time
@@ -26,19 +29,25 @@ if __name__=='__main__':
 
 # Send-message-to-Line-Notify Function
 def send_to_line(message):
-    # K8s Secert env Inject # Line Notify API Token
-    lineToken = os.getenv('lineToken')
-    # HTTP Head parameter & data
-    headers = { "Authorization": "Bearer " + lineToken }
+    """
+        Send-message-to-Line-Notify Function
+    :param message: str type, the message what you want to send to Line Notify.
+    """
+    lineToken = os.getenv('lineToken')  # K8s Secert env Inject # Line Notify API Token
+    headers = { "Authorization": "Bearer " + lineToken }    # HTTP Head parameter & data
     requests.post("https://notify-api.line.me/api/notify", headers = headers, data = { 'message':message })
 
-# Send-message-to-telegram Function
-# Check ID website https://api.telegram.org/bot5834396372:AAFX3-TbwkK6Mhf8qfMANi-lOJAeGADyYgo/getUpdates
+
+
 def send_to_telegram(message):
-    # WebHealthCheck-notification-popoint Chat Group ID : <Add your ID>
-    chatID = '<Add your ID>'
-    # PoService-AlarmBot's apiToken
-    apiToken = os.getenv('apiToken')
+    """
+        Send-message-to-telegram Function
+    :param message: str type, the message what you want to send to Telegram chat room.
+    """
+    
+    chatID = '<Add your ID>'    # WebHealthCheck-notification-popoint Chat Group ID : <Add your ID>
+    # Check ID website https://api.telegram.org/bot5834396372:AAFX3-TbwkK6Mhf8qfMANi-lOJAeGADyYgo/getUpdates
+    apiToken = os.getenv('apiToken')    # Service-AlarmBot's apiToken
     apiURL = f'https://api.telegram.org/bot{apiToken}/sendMessage'
     try:
         response = requests.post(apiURL, json={'chat_id': chatID, 'text': message})
@@ -47,7 +56,14 @@ def send_to_telegram(message):
         print(e)
 
 
-def api_path(api_website, statuscode, method, data):
+def api_healthcheck(api_website, statuscode, method, data):
+    """
+        API status code healthcheck function
+    :param api_website: str type, to check api website.
+    :param statuscode: int type, the healthy status code of API.
+    :param method: requests.get, requests.post, requests.put ... various kinds requests you want to use.
+    :para data: dict type, HTTP POST data.
+    """
     r = method(url=api_website,data = data)
     print(api_website, r.status_code)
     if r.status_code != int(statuscode):
@@ -58,4 +74,4 @@ def api_path(api_website, statuscode, method, data):
         print(str(api_website) + '\n This API is disconnect. ' + 'StatusCode is ' + str(r.status_code))
     
 for i in range(0,len(apilist)):
-    api_path(apilist[i]['website'], apilist[i]['statuscode'], apilist[i]['method'], apilist[i]['data'])
+    api_healthcheck(apilist[i]['website'], apilist[i]['statuscode'], apilist[i]['method'], apilist[i]['data'])
