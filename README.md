@@ -4,7 +4,7 @@
 
 use crontab every minute to test once.  
 request API or website status healthcheck.  
-send message to line & telegram.  
+send the message to line & telegram.  
 
 
 https://officeguide.cc/python-line-notify-send-messages-images-tutorial-examples/  
