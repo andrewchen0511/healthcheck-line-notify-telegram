@@ -7,7 +7,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
 # Constants
-CHAT_ID = "-1001716641802"  # WebHealthCheck-notification-popoint Chat Group ID 
+CHAT_ID = "-10017......"  # WebHealthCheck-notification-popoint Chat Group ID 
 LINE_TOKEN = os.getenv('lineToken')  # K8s Secret env Inject # Line Notify API Token
 TELEGRAM_Bot_TOKEN = os.getenv('apiToken')  # PoService-AlarmBot's apiToken
 API_HEALTH_CONFIG = {
